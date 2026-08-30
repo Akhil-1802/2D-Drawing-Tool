@@ -34,11 +34,13 @@ function App() {
       const rect = canvas.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
+      const startX = startPoint.current.x;
+    const startY = startPoint.current.y;
       if(tool == "rectangle"){
-        const width = Math.abs(x - startPoint.current.x);
-    const height = Math.abs(y - startPoint.current.y);
-    const rectX = Math.min(x, startPoint.current.x);
-    const rectY = Math.min(y, startPoint.current.y);
+        const width = Math.abs(x - startX);
+    const height = Math.abs(y - startY);
+    const rectX = Math.min(x, startX);
+    const rectY = Math.min(y, startY);
        shape = {
         type : "rectangle",
         x : rectX,
@@ -48,31 +50,21 @@ function App() {
       }
       }
       else if(tool == "circle"){
-          const startX = startPoint.current.x;
-const startY = startPoint.current.y;
+          
 
-const left = Math.min(startX, x);
-const top = Math.min(startY, y);
-const diameter = Math.min(
-    Math.abs(x - startX),
-    Math.abs(y - startY)
-);
+    const dx = x - startX;
+    const dy = y - startY;
 
-const centerX = left + diameter / 2;
-const centerY = top + diameter / 2;
-
-const radius = Math.min(
-    Math.abs(x - startX),
-    Math.abs(y - startY)
-) / 2;
+    const radius = Math.hypot(dx, dy);
 
         shape = {
         type : "circle",
-        cx : centerX,
-        cy : centerY,
+        cx : startX,
+        cy : startY,
         r : radius,
         }
       }
+      
       console.log(shape)
       setShapes(prev => [...prev , shape])
       }
@@ -98,6 +90,11 @@ const radius = Math.min(
     const height = Math.abs(y - startPoint.current.y);
     const rectX = Math.min(x, startPoint.current.x);
     const rectY = Math.min(y, startPoint.current.y);
+    ctx.fillText(
+    `W: ${Math.abs(width).toFixed(1)} × H: ${Math.abs(height).toFixed(1)}`,
+    x + 10,
+    y - 10
+);
     
     ctx.strokeRect(rectX,rectY,width ,height)
     console.log(x, y);
@@ -105,27 +102,22 @@ const radius = Math.min(
 
     else if(tool == "circle"){
       const startX = startPoint.current.x;
-const startY = startPoint.current.y;
+    const startY = startPoint.current.y;
 
-const left = Math.min(startX, x);
-const top = Math.min(startY, y);
-const diameter = Math.min(
-    Math.abs(x - startX),
-    Math.abs(y - startY)
-);
+    const dx = x - startX;
+    const dy = y - startY;
 
-const centerX = left + diameter / 2;
-const centerY = top + diameter / 2;
-
-const radius = Math.min(
-    Math.abs(x - startX),
-    Math.abs(y - startY)
-) / 2;
+    const radius = Math.hypot(dx, dy);
 
       ctx.beginPath();
+      ctx.fillText(
+        `Radius: ${radius.toFixed(1)} px`,
+    x + 10,
+    y - 10
+);
       ctx.arc(
-        centerX,
-        centerY,
+        startX,
+        startY,
         radius,
         0,
         Math.PI * 2
@@ -174,6 +166,10 @@ const radius = Math.min(
 
     <button className='p-1 border bg-green-200 cursor-pointer' onClick={() => setTool("circle")}>
     Circle
+    </button>
+
+    <button className='p-1 border bg-green-200 cursor-pointer' onClick={() => setTool("line")}>
+    Line
     </button>
     </div>
       <canvas ref={canvasRef} 
