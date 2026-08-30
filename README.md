@@ -1,16 +1,28 @@
-# React + Vite
+# 2D Drawing Tool
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A browser-based canvas drawing app built with React and Vite.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Draw shapes on an HTML canvas by clicking and dragging:
 
-## React Compiler
+- **Rectangle** — drag to define width and height
+- **Circle** — drag from center to set radius
+- **Line** — drag from start to end point
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Live dimensions are shown while drawing. All completed shapes persist on the canvas.
 
-## Expanding the ESLint configuration
+## Getting started
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+Then open `http://localhost:5173` in your browser.
+
+## Planned features
+
+- **Selection tool** — click to select a shape on the canvas
+- **Delete tool** — remove selected shapes
+- **JSON export** — download all shapes as a JSON file
